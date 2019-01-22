@@ -30,12 +30,3 @@ signal sig_I : integer range 0 to 255 := 0;
 signal sig_J : integer range 0 to 255 := 5;
 sig_I <= 4
 sig_I <= sig_J + 5; -- 10
-
-
-
-
-
-
---Jonathan is lame!!!
-
-
