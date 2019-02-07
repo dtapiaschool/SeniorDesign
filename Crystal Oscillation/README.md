@@ -12,3 +12,5 @@ Make sure to log your progress here.
 Changes: created the repository and sent out invitations
 
 
+1*6-2019: Denny Tapia
+found way to output a 6666.66Mhz frequency with a 50Mhz input. Text file is in Senior Design folder
