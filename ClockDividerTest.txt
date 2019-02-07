@@ -1,0 +1,79 @@
+Clock Division:
+
+The first section is code for a counter, reset and clock. our goal is to get a frequency of 0.0066Mhz(6666.66Mhz)
+If we have an input frequency of 50Mhz, then we must divide by 7500 to get to 0.0066Mhz.We then 
+divide 7500 by 2 to get a counter. So we must count the rising edges of the clock and start over after 3750.
+That way, the output frequency goes to 1 and 0 within 7500 cycles. 
+
+
+notes: I used a template verilog file so reset and other concepts are not utilized or understood completely. 
+I was able to modify for our needs. Also, I used Xilinx ISE to simualte since that is what im working on and know
+how to simulate. There are other ways to use register as a counter but for now we will use this. 
+
+module clk_div (clk,reset, clk_out);
+ 
+input clk;
+input reset;
+output clk_out;
+
+reg [11:0] r_reg;
+wire [11:0] r_nxt;
+reg clk_track;
+ 
+always @(posedge clk or posedge reset)
+ 
+begin
+  if (reset)
+     begin
+        r_reg <= 3'b0;
+		  clk_track <= 1'b0;
+     end
+ 
+  else if (r_nxt == 3750'b111010100110) // edeges to flip output frequency. make sure to use all reg bits!!
+ 	   begin
+	     r_reg <= 0;
+	     clk_track <= ~clk_track;
+	   end
+ 
+  else 
+      r_reg <= r_nxt;
+end
+ 
+ assign r_nxt = r_reg+1;   	      
+ assign clk_out = clk_track;
+endmodule
+
+
+The second code is for simuation. Since we are using a 50Mhz frequency, 1 cycle will take 20Nanoseconds. Which
+is defined by #10(10nanoseconds to flip frequency, then another 10nanoseconds to flip again for a total
+of 20nanoseconds)
+
+ module clkdiv4_tb;
+  reg clk,reset;
+  wire clk_out;
+ 
+     clk_div t1(clk,reset,clk_out);
+        initial
+          clk= 1'b0;
+     always
+        #10 clk=~clk; // will flip frequency at ns interval
+        initial
+            begin
+               #5 reset=1'b1; //5ns when reset = 1
+               #5 reset=0'b0; //how long reset will last
+               #150000 $finish;	//duration of simulation
+            end
+ 
+        initial
+               $monitor("clk=%b,reset=%b,clk_out=%b",clk,reset,clk_out);
+ 
+        initial
+            begin
+              $dumpfile("clkdiv4_tb.vcd");
+              $dumpvars(0,clkdiv4_tb);
+             end
+    endmodule
+ 
+
+
+update: I realize there are different states(read, erase, write) and so the desired frequency might be different. Nonetheless, we can use this method to change clock output.
