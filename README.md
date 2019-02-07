@@ -8,9 +8,9 @@ Our first project will be to find a way to manipulate the crystal oscillator(clo
 
 Make sure to log your progress here.
 
-1-17-2019; Denny Tapia; 
+1-17-2019: Denny Tapia
 Changes: created the repository and sent out invitations
 
 
-1*6-2019: Denny Tapia
+1-6-2019: Denny Tapia; Jonathan Diaz
 found way to output a 6666.66Mhz frequency with a 50Mhz input. Text file is in Senior Design folder
