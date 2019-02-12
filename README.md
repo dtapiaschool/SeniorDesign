@@ -17,4 +17,4 @@ Make sure to log your progress here.
 
 2-11-2019 Denny Tapia; Jonathan Diaz
 
-*Migrated the clock division code to Quartus. Got it to create a 1h frequency for every 8hz. 
+*Deleted old,unused files. Migrated the clock division code to Quartus. Got it to create a 1h frequency for every 8hz. 
