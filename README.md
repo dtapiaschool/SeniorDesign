@@ -18,3 +18,8 @@ Make sure to log your progress here.
 2-11-2019 Denny Tapia; Jonathan Diaz
 
 *Deleted old,unused files. Migrated the clock division code to Quartus. Got it to create a 1h frequency for every 8hz. 
+
+2-14-2019 Denny Tapia;
+*Connected different frequency outputs to LEDs to simulate memory connection behavior. Code is shown in "ClockDividerUsingLED" text file. 
+*Ordered Memory Chips and sockets
+*deleted old and unused project files

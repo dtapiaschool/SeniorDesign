@@ -1,0 +1,112 @@
+
+
+
+Clock Divider output using 3 LEDs
+First part Will make use of a separate counters/register/ for different frequency. 
+Second part will make use of same counter for different frequency(currently more efficient)
+Same output
+LED[0]: frequency of 1HZ
+LED[1]: frequency of 5hz
+LED[2]: frequency of 1hz(inverse of LED[0])
+
+1)
+module Clockdivision (clk,reset, clk_out1, clk_out2, clk_out3); 
+input clk;
+input reset;
+output clk_out1;
+output clk_out2;
+output clk_out3;
+reg [32:0] r_reg;
+reg [32:0] r_reg2;
+wire [32:0] r_nxt;
+wire [32:0] r_nxt2;
+reg clk_track;
+reg clk_track2; 
+always @(posedge clk or posedge reset) 
+begin
+  if (reset)
+     begin
+        r_reg <= 1'b0;
+		  clk_track <= 1'b0;
+     end
+ 
+  else if (r_nxt == 25'b1011111010111100001000000) // (1Hz)// edeges to flip output frequency. make sure to use all reg bits!!
+ 	   begin
+	     r_reg <= 0;
+	     clk_track <= ~clk_track;
+	   end				
+  else 
+      r_reg <= r_nxt;
+end
+
+always @(posedge clk or posedge reset)
+begin
+  if (reset)
+     begin
+		  r_reg2 <= 1'b0;
+		  clk_track2 <= 1'b0;
+     end
+ 		
+	else if (r_nxt2 == 23'b10011000100101101000000) //(5hz) // edeges to flip output frequency. make sure to use all reg bits!!
+		begin
+		  r_reg2 <= 0;
+		  clk_track2 <= ~clk_track2;
+		end	
+  else 
+		r_reg2 <= r_nxt2;
+end
+assign r_nxt = r_reg+1;
+assign r_nxt2 = r_reg2+1;
+assign clk_out1 = clk_track;
+assign clk_out2 = clk_track2;
+assign clk_out3 = ~clk_track;
+endmodule
+
+
+2)
+module Clockdivision (clk,reset, clk_out1, clk_out2, clk_out3);
+input clk;
+input reset;
+output clk_out1;
+output clk_out2;
+output clk_out3;
+reg [32:0] r_reg;
+wire [32:0] r_nxt;
+reg clk_track;
+always @(posedge clk or posedge reset)
+begin
+  if (reset)
+     begin
+        r_reg <= 1'b0;
+		  clk_track <= 1'b0;
+     end
+  else if (r_nxt == 25'b1011111010111100001000000) // (1Hz)// edeges to flip output frequency. make sure to use all reg bits!!
+ 	   begin
+	     r_reg <= 0;
+	     clk_track <= ~clk_track;
+	   end			
+  else 
+      r_reg <= r_nxt;
+end
+always @(posedge clk or posedge reset)
+begin
+  if (reset)
+     begin
+        r_reg <= 1'b0;
+		  clk_track <= 1'b0;
+     end
+ 
+  else if (r_nxt == 23'b10011000100101101000000) // (1Hz)// edeges to flip output frequency. make sure to use all reg bits!!
+ 	   begin
+	     r_reg <= 0;
+	     clk_track <= ~clk_track;
+	   end
+				
+  else 
+      r_reg <= r_nxt;
+end
+assign r_nxt = r_reg+1;
+assign clk_out1 = clk_track;
+assign clk_out2 = clk_track;
+assign clk_out3 = ~clk_track;
+endmodule
