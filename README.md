@@ -23,3 +23,6 @@ Make sure to log your progress here.
 *Connected different frequency outputs to LEDs to simulate memory connection behavior. Code is shown in "ClockDividerUsingLED" text file. 
 *Ordered Memory Chips and sockets
 *deleted old and unused project files
+
+4-1-2019 Denny Tapia;
+created Data input module including clock divider. Fixed any errors. 
